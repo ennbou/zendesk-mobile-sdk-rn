@@ -5,19 +5,36 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 
-class ZendeskMobileSdkRNModule(reactContext: ReactApplicationContext) :
+import android.util.Log;
+
+import zendesk.core.AnonymousIdentity
+import zendesk.core.Zendesk
+import zendesk.support.guide.HelpCenterActivity
+import zendesk.support.Support
+
+class ZendeskMobileSdkRNModule(val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
 
   override fun getName(): String {
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
   @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
-  }
+  fun initZendesk(zendeskUrl: String, appId: String, clientId: String) {
+    Zendesk.INSTANCE.init(this.reactContext, zendeskUrl, appId, clientId);
+    Support.INSTANCE.init(Zendesk.INSTANCE);
+    Zendesk.INSTANCE.setIdentity(AnonymousIdentity())
+  } 
+
+  @ReactMethod
+  fun showHelpCenter(){
+    val activity = getCurrentActivity();
+    if (activity != null) {
+      HelpCenterActivity.builder().show(activity)
+    } else {
+      Log.e("Zendesk: Help Center", "Could not load getCurrentActivity -- no UI can be displayed without it.");
+    }
+  } 
 
   companion object {
     const val NAME = "ZendeskMobileSdkRN"
