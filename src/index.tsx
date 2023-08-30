@@ -32,3 +32,17 @@ export function initZendesk(zendeskConfig: {
 export function showHelpCenter() {
   ZendeskMobileSdkRN.showHelpCenter();
 }
+
+export function setColors(colors: {
+  primaryColor: String;
+  titleColor: String;
+  placeholderColor: String;
+}) {
+  if (Platform.OS === 'ios') {
+    ZendeskMobileSdkRN.setColors(
+      colors.primaryColor,
+      colors.titleColor,
+      colors.placeholderColor
+    );
+  }
+}
