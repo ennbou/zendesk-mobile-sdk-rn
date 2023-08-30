@@ -1,18 +1,30 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'zendesk-mobile-sdk-rn';
+import { StyleSheet, View, Button } from 'react-native';
+import { initZendesk, showHelpCenter, setColors } from 'zendesk-mobile-sdk-rn';
+import ZendeskConfig from './ZendeskConfig';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    initZendesk({
+      zendeskUrl: ZendeskConfig.zendeskUrl,
+      appId: ZendeskConfig.appId,
+      clientId: ZendeskConfig.clientId,
+    });
+    setColors({
+      primaryColor: '#00ff00',
+      titleColor: '#ff0000',
+      placeholderColor: '#0000ff',
+    });
+  }, []);
+
+  const handleBtnClick = React.useCallback(() => {
+    showHelpCenter();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button title="Help Center" onPress={handleBtnClick} />
     </View>
   );
 }

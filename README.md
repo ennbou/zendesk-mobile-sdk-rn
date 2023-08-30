@@ -8,14 +8,41 @@ zendesk mobile sdk for react native
 npm install zendesk-mobile-sdk-rn
 ```
 
+and add this to **build.gradle** file (not app build.gradle)
+
+```groovy
+allprojects {
+    repositories {
+    maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+  }
+}
+```
+
 ## Usage
 
 ```js
-import { multiply } from 'zendesk-mobile-sdk-rn';
+import { initZendesk, showHelpCenter, setColors /* just for ios*/ } from 'zendesk-mobile-sdk-rn';
 
 // ...
+React.useEffect(() => {
+  initZendesk({
+    zendeskUrl: ZendeskConfig.zendeskUrl,
+    appId: ZendeskConfig.appId,
+    clientId: ZendeskConfig.clientId,
+  });
 
-const result = await multiply(3, 7);
+  // just for ios
+  setColors({
+    primaryColor: '#00ff00',
+    titleColor: '#ff0000',
+    placeholderColor: '#0000ff',
+  });
+}, []);
+
+const handleBtnClick = React.useCallback(() => {
+  showHelpCenter();
+}, []);
+
 ```
 
 ## Contributing
