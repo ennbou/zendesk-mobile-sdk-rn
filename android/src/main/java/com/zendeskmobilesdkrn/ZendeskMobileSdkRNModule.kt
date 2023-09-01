@@ -11,6 +11,8 @@ import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.guide.HelpCenterActivity
 import zendesk.support.Support
+import zendesk.support.requestlist.RequestListActivity
+
 
 class ZendeskMobileSdkRNModule(val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -35,6 +37,17 @@ class ZendeskMobileSdkRNModule(val reactContext: ReactApplicationContext) :
       Log.e("Zendesk: Help Center", "Could not load getCurrentActivity -- no UI can be displayed without it.");
     }
   } 
+
+  @ReactMethod
+  fun showMyTickets(){
+    val activity = getCurrentActivity();
+    if (activity != null) {
+      RequestListActivity.builder().show(activity);
+    } else {
+      Log.e("Zendesk: My Tickets", "Could not load getCurrentActivity -- no UI can be displayed without it.");
+    }
+  } 
+
 
   companion object {
     const val NAME = "ZendeskMobileSdkRN"

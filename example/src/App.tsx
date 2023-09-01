@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
-import { initZendesk, showHelpCenter, setColors } from 'zendesk-mobile-sdk-rn';
+import {
+  initZendesk,
+  showHelpCenter,
+  setColors,
+  showMyTickets,
+} from 'zendesk-mobile-sdk-rn';
 import ZendeskConfig from './ZendeskConfig';
 
 export default function App() {
@@ -18,13 +23,18 @@ export default function App() {
     });
   }, []);
 
-  const handleBtnClick = React.useCallback(() => {
+  const handleHelpCenterClick = React.useCallback(() => {
     showHelpCenter();
+  }, []);
+
+  const handleMyTicketClick = React.useCallback(() => {
+    showMyTickets();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Button title="Help Center" onPress={handleBtnClick} />
+      <Button title="Help Center" onPress={handleHelpCenterClick} />
+      <Button title="My Tickets" onPress={handleMyTicketClick} />
     </View>
   );
 }

@@ -29,6 +29,7 @@ class ZendeskMobileSdkRN: NSObject {
     uiNavStyle.titleTextAttributes =  [.foregroundColor:tColor]
     
     uiNavStyle.tintColor = tColor
+    uiNavStyle.backgroundColor = pColor
     uiNavStyle.barTintColor = pColor
 
     UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [.foregroundColor: phColor])
@@ -40,11 +41,25 @@ class ZendeskMobileSdkRN: NSObject {
     DispatchQueue.main.async {
       let helpCenter = HelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [])
 
-      helpCenter.navigationItem.titleView?.backgroundColor = .red
-      if let rightBarButtonItem = helpCenter.navigationItem.rightBarButtonItem {
-        rightBarButtonItem.tintColor = .red
-      }
       let navigationController = UINavigationController(rootViewController: helpCenter)
+      
+      let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+      
+      if var topController = keyWindow?.rootViewController {
+          while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+          }
+        topController.present(navigationController, animated: true)
+      }
+    }
+  }
+
+  @objc
+  func showMyTickets() -> Void {
+    DispatchQueue.main.async {
+      let requestListController = RequestUi.buildRequestList()
+
+      let navigationController = UINavigationController(rootViewController: requestListController)
       
       let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
       

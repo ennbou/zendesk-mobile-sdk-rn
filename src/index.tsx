@@ -46,3 +46,7 @@ export function setColors(colors: {
     );
   }
 }
+
+export function showMyTickets() {
+  ZendeskMobileSdkRN.showMyTickets();
+}
