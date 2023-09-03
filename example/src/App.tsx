@@ -2,20 +2,15 @@ import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
 import {
-  initZendesk,
+  initZendeskAnonymous,
   showHelpCenter,
   setColors,
-  showMyTickets,
+  initZendeskJwt,
 } from 'zendesk-mobile-sdk-rn';
 import ZendeskConfig from './ZendeskConfig';
 
 export default function App() {
   React.useEffect(() => {
-    initZendesk({
-      zendeskUrl: ZendeskConfig.zendeskUrl,
-      appId: ZendeskConfig.appId,
-      clientId: ZendeskConfig.clientId,
-    });
     setColors({
       primaryColor: '#00ff00',
       titleColor: '#ff0000',
@@ -24,17 +19,31 @@ export default function App() {
   }, []);
 
   const handleHelpCenterClick = React.useCallback(() => {
-    showHelpCenter();
+    showHelpCenter(false);
   }, []);
 
-  const handleMyTicketClick = React.useCallback(() => {
-    showMyTickets();
+  const initJwt = React.useCallback(() => {
+    initZendeskJwt({
+      zendeskUrl: ZendeskConfig.jwt.zendeskUrl,
+      appId: ZendeskConfig.jwt.appId,
+      clientId: ZendeskConfig.jwt.clientId,
+      jwt: 'jwt',
+    });
+  }, []);
+
+  const iniAnonymous = React.useCallback(() => {
+    initZendeskAnonymous({
+      zendeskUrl: ZendeskConfig.anonymous.zendeskUrl,
+      appId: ZendeskConfig.anonymous.appId,
+      clientId: ZendeskConfig.anonymous.clientId,
+    });
   }, []);
 
   return (
     <View style={styles.container}>
       <Button title="Help Center" onPress={handleHelpCenterClick} />
-      <Button title="My Tickets" onPress={handleMyTicketClick} />
+      <Button title="Init Jwt" onPress={initJwt} />
+      <Button title="Init Anonymous" onPress={iniAnonymous} />
     </View>
   );
 }
