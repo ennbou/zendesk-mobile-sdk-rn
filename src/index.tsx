@@ -17,20 +17,34 @@ const ZendeskMobileSdkRN = NativeModules.ZendeskMobileSdkRN
       }
     );
 
-export function initZendesk(zendeskConfig: {
+export function initZendeskJwt(zendeskConfig: {
+  zendeskUrl: String;
+  appId: String;
+  clientId: String;
+  jwt: String;
+}) {
+  ZendeskMobileSdkRN.initZendeskJwt(
+    zendeskConfig.zendeskUrl,
+    zendeskConfig.appId,
+    zendeskConfig.clientId,
+    zendeskConfig.jwt
+  );
+}
+
+export function initZendeskAnonymous(zendeskConfig: {
   zendeskUrl: String;
   appId: String;
   clientId: String;
 }) {
-  ZendeskMobileSdkRN.initZendesk(
+  ZendeskMobileSdkRN.initZendeskAnonymous(
     zendeskConfig.zendeskUrl,
     zendeskConfig.appId,
     zendeskConfig.clientId
   );
 }
 
-export function showHelpCenter() {
-  ZendeskMobileSdkRN.showHelpCenter();
+export function showHelpCenter(isAuth: boolean) {
+  ZendeskMobileSdkRN.showHelpCenter(isAuth);
 }
 
 export function setColors(colors: {

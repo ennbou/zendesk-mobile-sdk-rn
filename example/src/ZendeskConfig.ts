@@ -1,7 +1,14 @@
 const config = {
-  zendeskUrl: 'https://Your_Demain_Name.........zendesk.com',
-  appId: 'base64...............',
-  clientId: 'mobile_sdk_client_.............',
+  jwt: {
+    zendeskUrl: 'https://XXXXXXX.zendesk.com',
+    appId: '...........HERE.............',
+    clientId: '...........HERE.............',
+  },
+  anonymous: {
+    zendeskUrl: 'https://XXXXXXX.zendesk.com',
+    appId: '...........HERE.............',
+    clientId: '...........HERE.............',
+  },
 };
 
 export default config;

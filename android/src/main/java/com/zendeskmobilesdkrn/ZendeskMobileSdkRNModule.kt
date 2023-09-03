@@ -9,10 +9,12 @@ import android.util.Log;
 
 import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
+import zendesk.core.JwtIdentity
 import zendesk.support.guide.HelpCenterActivity
 import zendesk.support.Support
 import zendesk.support.requestlist.RequestListActivity
-
+import zendesk.support.guide.ArticleConfiguration
+import zendesk.support.guide.HelpCenterConfiguration
 
 class ZendeskMobileSdkRNModule(val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -22,17 +24,32 @@ class ZendeskMobileSdkRNModule(val reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun initZendesk(zendeskUrl: String, appId: String, clientId: String) {
+  fun initZendeskAnonymous(zendeskUrl: String, appId: String, clientId: String) {
     Zendesk.INSTANCE.init(this.reactContext, zendeskUrl, appId, clientId);
     Support.INSTANCE.init(Zendesk.INSTANCE);
-    Zendesk.INSTANCE.setIdentity(AnonymousIdentity())
-  } 
+    Zendesk.INSTANCE.setIdentity(AnonymousIdentity())    
+  }
 
   @ReactMethod
-  fun showHelpCenter(){
+  fun initZendeskJwt(zendeskUrl: String, appId: String, clientId: String, jwt: String) {
+    Zendesk.INSTANCE.init(this.reactContext, zendeskUrl, appId, clientId);
+    Support.INSTANCE.init(Zendesk.INSTANCE);
+    Zendesk.INSTANCE.setIdentity(JwtIdentity(jwt))    
+  }
+
+  @ReactMethod
+  fun showHelpCenter(isAuth: Boolean){
     val activity = getCurrentActivity();
     if (activity != null) {
-      HelpCenterActivity.builder().show(activity)
+      val helpCenterConfig = HelpCenterConfiguration.Builder()
+      .withContactUsButtonVisible(isAuth)
+      .withShowConversationsMenuButton(isAuth)
+      .config()
+
+      val articleConfig = ArticleConfiguration.Builder()
+      .withContactUsButtonVisible(isAuth)
+      .config()
+      HelpCenterActivity.builder().show(activity, helpCenterConfig, articleConfig)
     } else {
       Log.e("Zendesk: Help Center", "Could not load getCurrentActivity -- no UI can be displayed without it.");
     }
