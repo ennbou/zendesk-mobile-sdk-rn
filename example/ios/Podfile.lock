@@ -489,7 +489,7 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - zendesk-mobile-sdk-rn (0.1.0):
+  - zendesk-mobile-sdk-rn (0.1.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ZendeskSupportSDK
@@ -734,7 +734,7 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  zendesk-mobile-sdk-rn: e4a7d7b4ffd89776f91cb4296200b42ac1bb2366
+  zendesk-mobile-sdk-rn: bec80d7c7175736ef030ec5a459b75e13a451893
   ZendeskCommonUISDK: d2dfaa56b9da2658dac0e078022bf918959b5854
   ZendeskCoreSDK: bd3bc4e7ac4e508de20425a1eac3512a2d2c86bb
   ZendeskMessagingAPISDK: 355f623d727620755b4041a42dffda4fb28ab90c
